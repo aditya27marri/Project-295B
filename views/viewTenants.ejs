@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="stylesheets/style.css" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/users.css" />
+    <script src="js/home.js"></script>
+    <link href="fonts/font-awesome.css" rel="stylesheet" />
+    
+  </head>
+
+  <body>
+
+  <nav class="navbar navbar-default navbar-static-top">
+    <div class="container-fluid">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle navbar-toggle-sidebar collapsed">
+			MENU
+			</button>
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/home">
+				Smart Connected Buildings
+			</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">      
+			
+			<ul class="nav navbar-nav navbar-right">
+				<li class="dropdown ">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+						<%=fname%>
+						<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li class="dropdown-header">SETTINGS</li>
+							<li class=""><a href="/viewProfile/<%=id%>">View Profile</a></li>
+							<li class="divider"></li>
+							<li><a href="/logout">Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</div><!-- /.container-fluid -->
+	</nav>  	<div class="container-fluid main-container">
+  		<div class="col-md-2 sidebar">
+  			<div class="row">
+	<!-- uncomment code for absolute positioning tweek see top comment in css -->
+	<div class="absolute-wrapper"> </div>
+	<!-- Menu -->
+	<div class="side-menu">
+		<nav class="navbar navbar-default" role="navigation">
+			<!-- Main Menu -->
+			<div class="side-menu-container">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#"><span class="glyphicon glyphicon-dashboard"></span> Dashboard</a></li>
+					<li><a href="/power"><span class="glyphicon glyphicon-flash"></span> Electricity</a></li>
+					<li><a href="/temp"><span class="glyphicon glyphicon-cloud"></span> Tempareture</a></li>
+
+					<!-- Dropdown-->
+					<li class="panel panel-default" id="dropdown">
+						<a data-toggle="collapse" href="#dropdown-lvl1">
+							<span class="glyphicon glyphicon-user"></span> Tenants Info <span class="caret"></span>
+						</a>
+
+						<!-- Dropdown level 1 -->
+						<div id="dropdown-lvl1" class="panel-collapse collapse">
+							<div class="panel-body">
+								<ul class="nav navbar-nav">
+									<li><a href="/addTenants">Add Tenants</a></li>
+									<li><a href="/viewTenants">viewTenants</a></li>
+									<li><a href="/viewEmployees">view Employee</a></li>
+
+									<!-- Dropdown level 2 -->
+									
+								</ul>
+							</div>
+						</div>
+					</li>
+
+					<li><a href="/stats"><span class="glyphicon glyphicon-stats"></span> Stats</a></li>
+
+				</ul>
+			</div><!-- /.navbar-collapse -->
+		</nav>
+
+	</div>
+</div>  		</div>
+  		<div class="col-md-10 content">
+  			  <div class="panel panel-default">
+	            <div class="container">
+    <div class="row">
+        <div class="panel panel-default widget">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-user"></span>
+                <h3 class="panel-title">
+                    <%=tag%> Information</h3>
+                <span class="label label-info">
+                    78</span>
+            </div>
+            <% for(var i in rows) 
+                            { %>
+            <div class="panel-body">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <div class="row">
+                            <div class="col-xs-2 col-md-1">
+                                <img src="img/user.png" class="img-circle img-responsive" alt="" /></div>
+                            <div class="col-xs-10 col-md-11">
+                                <div>
+                                    <a href="/viewProfile/<%=rows[i].user_id%>">
+                                        <%=rows[i].fullname%></a>
+                                    <div class="mic-info">
+                                        Members: <a href="/viewProfile/<%=rows[i].user_id%>">view profile</a> 
+                                    </div>
+                                </div>
+                                <div class="comment-text">Details:
+                                    <%=rows[i].details%></a>
+                                    </div>
+                                <div class="action">
+                                 <a href="/editUser/<%=rows[i].user_id%>">
+                                    <button type="button" class="btn btn-primary btn-xs" title="Edit">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                    </button>
+                                  </a>
+                                  <a href="/deleteUser/<%=rows[i].user_id%>">   
+                                    <button type="button" class="btn btn-danger btn-xs" title="Delete">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </button>
+                                   </a> 
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                   </ui> 
+                    <% } %>
+                <a href="#" class="btn btn-primary btn-sm btn-block" role="button"><span class="glyphicon glyphicon-refresh"></span> More</a>
+            </div>
+        </div>
+    </div>
+</div>
+	            
+               </div>
+        </div>
+  		</div>
+  		<footer class="pull-left footer">
+  			<p class="col-md-12">
+  				<hr class="divider">
+  				Copyright &COPY; 2015 <a href="/home">Smart connected Buildings</a>
+  			</p>
+  		</footer>
+  	</div>
+  	
+
+  </body>
+</html>
