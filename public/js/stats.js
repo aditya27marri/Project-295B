@@ -143,7 +143,7 @@ $(function () {
             },
 
             series: [{
-                name: 'Electricity bill in past- predicted',
+                name: 'Electricity bill in  predicted-past',
                 data: data
             }]
 
@@ -182,14 +182,14 @@ $(function () {
                 }
             },
             title: {
-                text: 'Predicted Usage',
+                text: 'Past Usage ',
                 style: {
                     color: Highcharts.getOptions().colors[1]
                 }
             }
         }, { // Secondary yAxis
             title: {
-                text: 'Past Usage',
+                text: 'Predicted Usage',
                 style: {
                     color: Highcharts.getOptions().colors[0]
                 }
@@ -323,3 +323,4 @@ $(function () {
     });
   });
  });
+

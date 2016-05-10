@@ -49,6 +49,7 @@ app.get('/tempPreStats',user.tempPreStats);
 app.get('/getMonthStats',user.getMonthStats);
 app.get('/monthStats',user.MonthStats);
 app.get('/peoStats',user.peoStats);
+app.get('/peopreStats',user.peopreStats);
 app.get('/forcastWeat',user.forcastWeat);
 app.get('/monHumStats',user.monHumStats);
 app.get('/threeWeaStats',user.threeWeaStats);
