@@ -495,6 +495,55 @@ exports.createStats=function(req, res){
 	
 };
 
+exports.peopreStats=function(req, res){
+	var connection = dataObject.getConnection();
+	//var connection=connect();
+	console.log("peopreStats");
+	var query = "SELECT MONTHNAME(Date) as month, sum(kwatts) as tusage,sum(cost) as price,avg(people) as people  FROM `electricity` GROUP BY day(Date), people order by date";
+
+	console.log("query: "+query);
+	connection.query(query,function(err,rows,fields){
+		if (err) 
+		{ 
+			console.log("ERROR: " + err.message);
+		}
+		else
+		{    
+			if(rows.length!==0)
+			{
+				var input = new Array();
+				input['x'] = new Array();	input['y'] = new Array();
+				var estimationInput = new Array();
+				estimationInput['x'] = new Array();
+				estimationInput['y'] = new Array();
+				for(var i in rows) {
+					input['x'][i]=rows[i].tusage;
+					input['y'][i]=rows[i].price;
+				}
+				k=0;
+				for(var i in rows) {
+					estimationInput['x'][i]=rows[i].tusage+0.29;
+					k++;
+					if(k>5){
+						k=0;
+					}
+				}
+				var estimateData = Lyric.applyModel(estimationInput, Lyric.buildModel(input));
+				console.log("rows : "+JSON.stringify(rows));
+				console.log("data : "+JSON.stringify(estimateData));
+				res.send(estimateData);
+			}
+			else
+			{
+				console.log("error data : "+JSON.stringify(rows));
+			}
+		}
+
+	});
+	dataObject.returnConnection(connection);
+	
+};
+
 exports.MonthStats=function(req, res){
 	var connection = dataObject.getConnection();
 	//var connection=connect();

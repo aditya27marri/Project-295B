@@ -135,3 +135,114 @@ $(function () {
 	  });	
 	});
 
+$(function () {
+	  $.getJSON('/peopreStats', function (data) {
+		  var usage1=[],usage2=[],usage3=[],other=[],ndate=[];
+		    var startDate = new Date();
+		    for(var i = 0; i <= 7; i++) {
+		        var currentDate = new Date();
+		        currentDate.setDate(startDate.getDate() + i);
+		        ndate.push(DayAsString(currentDate.getDay()) + ", " + currentDate.getDate() + " " + MonthAsString(currentDate.getMonth()) + " " + currentDate.getFullYear());
+		    }
+		    function MonthAsString(monthIndex) {
+		        var d=new Date();
+		        var month=new Array();
+		        month[0]="January";
+		        month[1]="February";
+		        month[2]="March";
+		        month[3]="April";
+		        month[4]="May";
+		        month[5]="June";
+		        month[6]="July";
+		        month[7]="August";
+		        month[8]="September";
+		        month[9]="October";
+		        month[10]="November";
+		        month[11]="December";
+		        
+		        return month[monthIndex];
+		    }
+
+		    function DayAsString(dayIndex) {
+		        var weekdays = new Array(7);
+		        weekdays[0] = "Sunday";
+		        weekdays[1] = "Monday";
+		        weekdays[2] = "Tuesday";
+		        weekdays[3] = "Wednesday";
+		        weekdays[4] = "Thursday";
+		        weekdays[5] = "Friday";
+		        weekdays[6] = "Saturday";
+		        
+		        return weekdays[dayIndex];
+		    }
+	      console.log("other data"+JSON.stringify(data));
+	      var j=0,k=0,f=0,g=0;
+		  for(i=0;i<data.length;i++){
+	      	if(data[i].x<7 && j<8){
+	      		other[j]=data[i].y+3.75;
+	      		j++;
+	      	}else if(data[i].x<8 && k<8){
+	      		usage1[k]=data[i].y+0.3;
+	      		k++;
+	      	}else if(data[i].x<9 && f<8){
+	      		usage2[f]=data[i].y+1.35;
+	      		f++;
+	      	}else if(data[i].x<10 && g<8){
+	      		usage3[g]=data[i].y+2.28;
+	      		g++;
+	      	}
+	      }
+	      console.log("otherpre"+other);
+	      console.log("otherpre"+usage1);
+	      console.log("otherpre"+usage2);
+	      console.log("otherpre"+usage3);
+	    $('#peoprecontainer').highcharts({
+	        chart: {
+	            type: 'column'
+	        },
+	        title: {
+	            text: 'Cost predicition based on people'
+	        },
+	        subtitle: {
+	            text: 'Next seven days cost based on number of people'
+	        },
+	        xAxis: {
+	            categories: ndate,
+	            crosshair: true
+	        },
+	        yAxis: {
+	            min: 0,
+	            title: {
+	                text: 'Cost ($)'
+	            }
+	        },
+	        tooltip: {
+	            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+	            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+	                '<td style="padding:0"><b>{point.y:.1f} $</b></td></tr>',
+	            footerFormat: '</table>',
+	            shared: true,
+	            useHTML: true
+	        },
+	        plotOptions: {
+	            column: {
+	                pointPadding: 0.2,
+	                borderWidth: 0
+	            }
+	        },
+	        series: [{
+	            name: '2 People',
+	            data:  usage1
+	        }, {
+	            name: '3 people',
+	            data: usage2
+	        }, {
+	            name: '4 people',
+	            data: usage3
+	        }, {
+	            name: 'other',
+	            data: other
+	        }]
+	    });
+	  });
+	 });
